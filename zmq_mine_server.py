@@ -46,17 +46,21 @@ while True:
         input_data = info['data']
         print("[begin] Received request: ", input_data.shape)
         out = net_server(input_data)
+        print("out", out)
         socket.send(serialize(out))
         print("[begin] Send output: ",  out.shape)
     elif info['flag'] == 1:
         grad_outputs = info['data']
-        print("[end] Received grad_output: ", grad_outputs.shape)
+        #print("[end] Received grad_output: ", grad_outputs.shape)
+        print("[inside] grad_coming",grad_outputs.shape)
         optimizer.zero_grad()
-        grad_i = th.autograd.grad(out, input_data, grad_outputs=grad_outputs)[0]
+        grad_i = th.autograd.grad(out, input_data, grad_outputs=grad_outputs,retain_graph=True)[0]
+        out.backward(grad_outputs)
         optimizer.step()
-        print("[end] Send dy/dx: ", grad_i.shape)
         socket.send(serialize(grad_i))
+        print("[end] Send dy/dx: ", grad_i.shape)
+
     elif info['flag'] == -1:
         socket.send(b'finish')
         break
-    time.sleep(1)
+    #time.sleep(1)
