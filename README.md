@@ -110,5 +110,6 @@ There are two problems:
 ```
 Which is uncomfortable, I don't think there are any other apis in torch.distributed.\
 Because of this, I drop the last 96 graphs in mnist.
+
 2. Both apis can not send and receive gpu.tensors!!! also can only send and receive cpu.tensors.\
 Dictionary and other are not available!!!
