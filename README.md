@@ -1,6 +1,6 @@
 # remote-train
-Use dist and zmq to implement model-parallel training.
-Dataset:mnist
+Use dist and zmq to implement model-parallel training.\
+Dataset:mnist\
 network:
 ```python
 class Net(nn.Module):
